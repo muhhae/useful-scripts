@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+set -e
+
+PROFILE_NAME="app-profile"
+URL="$1"
+BROWSER="firefox"
+
+exec setsid uwsm-app -- $BROWSER -P "$PROFILE_NAME" --new-window "$URL"

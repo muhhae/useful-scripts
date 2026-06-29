@@ -1,0 +1,46 @@
+#TabsToolbar,
+#PersonalToolbar,
+#star-button,
+#star-button-box,
+#toolbar-menubar,
+#customizableui-special-spring2,
+#customizableui-special-spring1,
+#PanelUI-menu-button {
+  visibility: collapse !important;
+}
+#urlbar {
+  opacity: 0;
+}
+#navigator-toolbox {
+  position: absolute !important;
+  top: 1vh !important; /* Adjust this value based on your tab bar height */
+  left: 0 !important;
+  width: 60vw !important;
+  opacity: 0 !important;
+  z-index: 9999 !important;
+  display: block !important;
+  left: 20vw !important;
+  pointer-events: none !important;
+}
+#nav-bar {
+  border-radius: 8px !important;
+}
+.cui-widget-panel {
+  background: red;
+}
+/* #navigator-toolbox:hover #urlbar, */
+/* #navigator-toolbox:hover, */
+/* :root:has(.cui-widget-panel:focus-within) #urlbar, */
+/* :root:has(.cui-widget-panel:focus-within) #navigator-toolbox, */
+#navigator-toolbox:focus-within,
+#navigator-toolbox:focus-within #urlbar {
+  opacity: 0.8 !important;
+  pointer-events: auto !important;
+}
+
+/* .cui-widget-panel { */
+/*   position: fixed ! !important; */
+/*   top: 50% !important; */
+/*   left: 50%; */
+/*   transform: translate(50%, 50%); */
+/* } */

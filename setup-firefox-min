@@ -1,0 +1,24 @@
+#!/usr/bin/env bash
+
+set -e
+
+FF_DIR="$HOME/.mozilla/firefox"
+BROWSER="firefox"
+
+for PROFILE_NAME in app-profile firefox-min-profile; do
+    echo "Initializing $BROWSER: $PROFILE_NAME"
+
+    if [ ! -d "$FF_DIR" ] || ! grep -q "Name=$PROFILE_NAME" "$FF_DIR/profiles.ini" 2>/dev/null; then
+        $BROWSER -CreateProfile "$PROFILE_NAME"
+    fi
+
+    PROFILE_PATH=$(grep -E "Path=.*$PROFILE_NAME" "$FF_DIR/profiles.ini" | cut -d= -f2)
+    FULL_PATH="$FF_DIR/$PROFILE_PATH"
+
+    mkdir -p "$FULL_PATH/chrome"
+    ln -srf ./firefox-min.css "$FULL_PATH/chrome/userChrome.css"
+
+    if ! grep -q "toolkit.legacyUserProfileCustomizations.stylesheets" "$FULL_PATH/prefs.js" 2>/dev/null; then
+        echo 'user_pref("toolkit.legacyUserProfileCustomizations.stylesheets", true);' >> "$FULL_PATH/prefs.js"
+    fi
+done
