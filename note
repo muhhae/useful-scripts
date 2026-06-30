@@ -1,0 +1,48 @@
+#!/usr/bin/env bash
+
+note_dir=~/notes
+
+cd "$note_dir"
+
+all() {
+    fzf --preview="cat {}" --bind="enter:execute(nvim {})"
+}
+
+today() {
+    today_note="$(date +%F).md"
+    if [ ! -s "$today_note" ]; then
+        echo "# $(date +%F)" > "$today_note"
+    fi
+    nvim "$today_note"
+}
+
+sync() {
+    echo ""
+    echo "Syncing..."
+    git add -A && git commit -m 'auto: sync notes';
+    git pull && git push;
+}
+
+case "$1" in
+    today)
+        today
+        ;;
+    all)
+        all
+        ;;
+    sync)
+        sync
+        ;;
+    *)
+        echo "Usage: $0 {today|all|sync}"
+        exit 1
+        ;;
+esac
+
+read -n 1 -p "Sync Y/n: " choice
+
+if [[ $choice == 'n' ]]; then
+    exit 0
+fi
+
+sync
